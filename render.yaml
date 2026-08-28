@@ -34,10 +34,15 @@ services:
         sync: false
 
       # --- Proveedor / dropshipping (orden de compra automática) ---
+      # CJ v2 se autentica con EMAIL de tu cuenta CJ + API Key.
       - key: SUPPLIER_NAME
         value: "CJ Dropshipping"
+      - key: SUPPLIER_EMAIL
+        sync: false
       - key: SUPPLIER_API_KEY
         sync: false
+      - key: SUPPLIER_FROM_COUNTRY
+        value: "CN"
 
       # --- Paquetería (guía + tracking) ---
       - key: SHIPPING_PROVIDER

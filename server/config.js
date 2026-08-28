@@ -32,10 +32,14 @@ export const config = {
   // --- Proveedor / dropshipping (orden de compra automática) ---
   supplier: {
     name: env.SUPPLIER_NAME || "CJ Dropshipping",
+    // CJ API v2 se autentica con el email de tu cuenta + tu API Key (como "password").
+    email: env.SUPPLIER_EMAIL || "",
     apiKey: env.SUPPLIER_API_KEY || "",
     apiBase: env.SUPPLIER_API_BASE || "https://developers.cjdropshipping.com/api2.0/v1",
+    // País desde donde CJ despacha (usa "CN" o el almacén que elijas, p.ej. "US").
+    fromCountryCode: env.SUPPLIER_FROM_COUNTRY || "CN",
     get live() {
-      return Boolean(this.apiKey);
+      return Boolean(this.apiKey && this.email);
     },
   },
 
