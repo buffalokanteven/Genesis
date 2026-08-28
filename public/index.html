@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>STILL · Wellness sin caos</title>
+  <meta name="description" content="Equipamiento de bienestar seleccionado: tapetes de yoga, kits de pesas, bandas de tensión y poleas. Movimiento con calma." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <!-- Nav -->
+  <header class="nav" id="nav">
+    <a class="brand" href="/">STILL</a>
+    <nav class="nav-links">
+      <a href="#coleccion">Colección</a>
+      <a href="#filosofia">Filosofía</a>
+      <a href="#envios">Envíos</a>
+    </nav>
+    <button class="cart-btn" id="cartOpen">Bolsa <span class="cart-count" id="cartCount">0</span></button>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-media" aria-hidden="true"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="eyebrow light">STILL — WELLNESS STUDIO</p>
+      <h1 class="hero-title">Wellness<br />without<br /><em>perfection</em></h1>
+      <p class="hero-sub">Equipamiento esencial para moverte con calma. Curado, ligero y hecho para durar.</p>
+      <a href="#coleccion" class="btn btn-light">Ver colección</a>
+    </div>
+  </section>
+
+  <!-- Marquee frase -->
+  <div class="marquee">
+    <div class="marquee-track">
+      <span><em>soft</em> habits · <em>hot</em> energy · <em>zero</em> chaos ·&nbsp;</span>
+      <span><em>soft</em> habits · <em>hot</em> energy · <em>zero</em> chaos ·&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- Filosofía split -->
+  <section class="split" id="filosofia">
+    <div class="split-panel split-blue">
+      <p class="split-word light">WELLNESS<br />BEGINS</p>
+    </div>
+    <div class="split-image" aria-hidden="true"></div>
+    <div class="split-panel split-light">
+      <p class="split-word">IN<br />STILLNESS.</p>
+    </div>
+  </section>
+
+  <!-- Colección -->
+  <section class="collection" id="coleccion">
+    <div class="section-head">
+      <p class="eyebrow">La colección</p>
+      <h2 class="serif-display">Lo esencial,<br /><em>seleccionado</em></h2>
+    </div>
+    <div class="product-grid" id="productGrid"><!-- render JS --></div>
+  </section>
+
+  <!-- Envíos / confianza -->
+  <section class="trust" id="envios">
+    <div class="trust-item"><h3 class="serif">Envío nacional</h3><p>Guía y rastreo automáticos. Gratis desde $899.</p></div>
+    <div class="trust-item"><h3 class="serif">Pago seguro</h3><p>Procesado con Mercado Pago. Meses sin intereses.</p></div>
+    <div class="trust-item"><h3 class="serif">Curaduría real</h3><p>Solo piezas que probaríamos en nuestro propio estudio.</p></div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-final">
+    <p class="eyebrow light">THE STILL GUIDE</p>
+    <h2 class="serif-display light"><em>soft</em> habits,<br />hot <em>energy</em>,<br />zero chaos</h2>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-brand">STILL</div>
+    <p>Movimiento sin caos. · <a href="/admin">Panel de operación</a></p>
+    <p class="fineprint">© 2026 STILL Wellness. Precios en MXN.</p>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div class="drawer-backdrop" id="backdrop"></div>
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h3 class="serif">Tu bolsa</h3>
+      <button id="cartClose" class="icon-btn">✕</button>
+    </div>
+    <div class="drawer-body" id="cartItems"></div>
+    <div class="drawer-foot">
+      <div class="total-row"><span>Subtotal</span><strong id="cartSubtotal">$0</strong></div>
+      <p class="fineprint" id="shipNote"></p>
+      <button class="btn btn-primary btn-block" id="checkoutBtn" disabled>Finalizar compra</button>
+    </div>
+  </aside>
+
+  <!-- Checkout modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="drawer-head">
+        <h3 class="serif">Datos de envío</h3>
+        <button id="modalClose" class="icon-btn">✕</button>
+      </div>
+      <form id="checkoutForm" class="form">
+        <label>Nombre completo<input name="name" required placeholder="Ana López" /></label>
+        <label>Email<input name="email" type="email" required placeholder="ana@correo.com" /></label>
+        <label>Teléfono<input name="phone" required placeholder="55 1234 5678" /></label>
+        <label>Calle y número<input name="street" required placeholder="Av. Reforma 123" /></label>
+        <div class="form-row">
+          <label>Ciudad<input name="city" required placeholder="CDMX" /></label>
+          <label>Estado<input name="state" required placeholder="CDMX" /></label>
+          <label>C.P.<input name="zip" required placeholder="06600" /></label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="payBtn">Ir a pagar con Mercado Pago</button>
+        <p class="fineprint">Serás redirigido a Mercado Pago para completar el pago de forma segura.</p>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "still-wellness",
+  "version": "1.0.0",
+  "description": "STILL — Tienda de wellness (dropshipping) con checkout Mercado Pago y automatización de fulfillment (orden de compra a proveedor + guía y tracking de envío).",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "demo": "node scripts/demo-flow.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
