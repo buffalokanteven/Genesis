@@ -8,7 +8,8 @@ const env = process.env;
 
 export const config = {
   port: Number(env.PORT || 3000),
-  baseUrl: env.BASE_URL || `http://localhost:${env.PORT || 3000}`,
+  // En Render, RENDER_EXTERNAL_URL se inyecta solo -> back_urls y webhook quedan correctos sin configurar nada.
+  baseUrl: env.BASE_URL || env.RENDER_EXTERNAL_URL || `http://localhost:${env.PORT || 3000}`,
   currency: "MXN",
 
   brand: {

@@ -1,0 +1,60 @@
+# ============================================================
+# Blueprint de despliegue para Render.com
+# Cómo usar:
+#   1) Entra a https://dashboard.render.com/select-repo?type=blueprint
+#   2) Elige el repo "Genesis" -> Render detecta este archivo automáticamente.
+#   3) Da "Apply". En ~1 min tendrás la tienda en línea con HTTPS.
+#
+# El sitio arranca en MODO SIMULACIÓN. Para cobrar de verdad, llena las
+# variables marcadas (sync: false) en el panel de Render -> Environment.
+# ============================================================
+services:
+  - type: web
+    name: still-wellness
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    # No hay dependencias que instalar (Node puro).
+    buildCommand: "echo 'sin dependencias que instalar'"
+    startCommand: "node server/index.js"
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+
+      # --- Mercado Pago (el dinero llega a TU cuenta) ---
+      # Pega tu Access Token de https://www.mercadopago.com.mx/developers/panel
+      - key: MP_ACCESS_TOKEN
+        sync: false
+      - key: MP_PUBLIC_KEY
+        sync: false
+      - key: MP_WEBHOOK_SECRET
+        sync: false
+
+      # --- Proveedor / dropshipping (orden de compra automática) ---
+      - key: SUPPLIER_NAME
+        value: "CJ Dropshipping"
+      - key: SUPPLIER_API_KEY
+        sync: false
+
+      # --- Paquetería (guía + tracking) ---
+      - key: SHIPPING_PROVIDER
+        value: "skydropx"
+      - key: SHIPPING_API_KEY
+        sync: false
+
+      # --- Dirección de origen (bodega proveedor o tu CEDIS) ---
+      - key: ORIGIN_NAME
+        value: "STILL Fulfillment"
+      - key: ORIGIN_STREET
+        value: "Av. Central 100"
+      - key: ORIGIN_CITY
+        value: "Ciudad de México"
+      - key: ORIGIN_STATE
+        value: "CDMX"
+      - key: ORIGIN_ZIP
+        value: "06000"
+      - key: ORIGIN_PHONE
+        value: "5555555555"
