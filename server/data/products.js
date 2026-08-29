@@ -23,11 +23,19 @@ export const products = [
     category: "Yoga",
     price: 499,
     compareAt: 799,
-    supplierCost: 185,
-    supplierSku: "CJ-YOGA-TPE6-001",
+    supplierCost: 185, // estimado; se ajusta con el costo real de CJ
+    supplierSku: "QSJM1103057", // SPU real de CJ (tapete "posture line, widened/thickened/lengthened")
+    supplierVariantSku: "QSJM110305726ZA", // variante/color por defecto
+    // Variantes de color del mismo tapete (para selector de color a futuro):
+    supplierVariants: [
+      { sku: "QSJM110305726ZA", label: "Color 1" },
+      { sku: "QSJM110305710JQ", label: "Color 2" },
+      { sku: "QSJM110305706FU", label: "Color 3" },
+      { sku: "CJJM110305701AZ", label: "Color 4" },
+    ],
     weightKg: 1.1,
     dimsCm: { length: 61, width: 15, height: 15 },
-    colors: ["Arena", "Océano", "Piedra"],
+    colors: ["Color 1", "Color 2", "Color 3", "Color 4"],
     image: "/img/yoga-mat.svg",
     badge: "Más vendido",
     description:
@@ -90,26 +98,6 @@ export const products = [
     description:
       "Cinco bandas de látex por niveles de resistencia (X-ligero a X-fuerte). Incluye manijas, anclaje de puerta y correas para tobillo. Guía de rutinas descargable.",
     specs: ["5 niveles de tensión", "Manijas + anclaje de puerta", "Correas de tobillo", "Bolsa de transporte"],
-  },
-  {
-    id: "wrist-ankle-weights",
-    slug: "pesas-muneca-tobillo",
-    name: "Pesas de Muñeca y Tobillo",
-    subtitle: "Ajustables · para caminar, correr y yoga",
-    category: "Movilidad",
-    price: 399,
-    compareAt: 649,
-    supplierCost: 130, // estimado; se ajusta con el costo real de CJ
-    supplierSku: "QSJM1103057", // SPU real de CJ
-    supplierVariantSku: "CJJM110305701AZ", // variante seleccionada (azul)
-    weightKg: 0.7,
-    dimsCm: { length: 20, width: 14, height: 8 },
-    colors: ["Azul"],
-    image: "/img/pulley.svg",
-    badge: "Nuevo",
-    description:
-      "Pesas ajustables para muñeca y tobillo. Añaden intensidad a caminatas, yoga y entrenamiento de tonificación manteniendo las manos libres. Ligeras y cómodas.",
-    specs: ["Ajustables y cómodas", "Para muñeca o tobillo", "Ideal caminar / yoga / pilates", "Par por pieza"],
   },
   {
     id: "pulley-hands-ankles",
