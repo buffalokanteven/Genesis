@@ -92,6 +92,26 @@ export const products = [
     specs: ["5 niveles de tensión", "Manijas + anclaje de puerta", "Correas de tobillo", "Bolsa de transporte"],
   },
   {
+    id: "wrist-ankle-weights",
+    slug: "pesas-muneca-tobillo",
+    name: "Pesas de Muñeca y Tobillo",
+    subtitle: "Ajustables · para caminar, correr y yoga",
+    category: "Movilidad",
+    price: 399,
+    compareAt: 649,
+    supplierCost: 130, // estimado; se ajusta con el costo real de CJ
+    supplierSku: "QSJM1103057", // SPU real de CJ
+    supplierVariantSku: "CJJM110305701AZ", // variante seleccionada (azul)
+    weightKg: 0.7,
+    dimsCm: { length: 20, width: 14, height: 8 },
+    colors: ["Azul"],
+    image: "/img/pulley.svg",
+    badge: "Nuevo",
+    description:
+      "Pesas ajustables para muñeca y tobillo. Añaden intensidad a caminatas, yoga y entrenamiento de tonificación manteniendo las manos libres. Ligeras y cómodas.",
+    specs: ["Ajustables y cómodas", "Para muñeca o tobillo", "Ideal caminar / yoga / pilates", "Par por pieza"],
+  },
+  {
     id: "pulley-hands-ankles",
     slug: "poleas-manos-tobillos",
     name: "Poleas para Manos y Tobillos",

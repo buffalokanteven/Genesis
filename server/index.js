@@ -74,6 +74,8 @@ function buildOrderFromCart(cart, customer, shipping) {
         price: p.price,
         supplierCost: p.supplierCost,
         supplierSku: p.supplierSku,
+        supplierVariantSku: p.supplierVariantSku || null,
+        supplierVid: p.supplierVid || null,
         weightKg: p.weightKg,
         dimsCm: p.dimsCm,
         quantity: Math.max(1, Number(line.quantity) || 1),

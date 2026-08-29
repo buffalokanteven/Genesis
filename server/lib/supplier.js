@@ -18,6 +18,8 @@ import { config } from "../config.js";
 
 // Cache del access token en memoria (evita re-autenticar en cada pedido).
 let _token = null; // { accessToken, expiresAt }
+// Cache de resolución SPU -> variante (evita consultar CJ en cada pedido).
+const _variantCache = new Map();
 
 async function getAccessToken() {
   if (_token && _token.expiresAt > Date.now() + 60_000) return _token.accessToken;
@@ -40,6 +42,46 @@ async function getAccessToken() {
     expiresAt: Date.parse(data.data.accessTokenExpiryDate) || Date.now() + 10 * 864e5,
   };
   return accessToken;
+}
+
+/**
+ * Resuelve el VID (variant id) de un producto a partir de su SPU/productSku de CJ.
+ * - Si el item ya trae `supplierVid`, se usa directo (sin consultar).
+ * - Si trae `supplierVariantSku`, elige esa variante exacta (útil cuando hay colores/tallas).
+ * - Si no, toma la primera variante disponible.
+ * Devuelve además el costo y peso reales que reporta CJ.
+ */
+async function resolveVariant(item) {
+  if (item.supplierVid) return { vid: item.supplierVid, cost: item.supplierCost, weight: item.weightKg };
+
+  const spu = item.supplierSku;
+  const cacheKey = `${spu}|${item.supplierVariantSku || ""}`;
+  if (_variantCache.has(cacheKey)) return _variantCache.get(cacheKey);
+
+  const token = await getAccessToken();
+  const res = await fetch(
+    `${config.supplier.apiBase}/product/query?productSku=${encodeURIComponent(spu)}`,
+    { headers: { "CJ-Access-Token": token } }
+  );
+  const data = await res.json().catch(() => ({}));
+  const product = data?.data || {};
+  const variants = product.variants || product.variantList || [];
+  if (!variants.length) {
+    throw new Error(`CJ: no encontré variantes para el SPU ${spu} (revisa que el producto exista en tu cuenta). Respuesta: ${JSON.stringify(data).slice(0, 200)}`);
+  }
+  const v =
+    (item.supplierVariantSku && variants.find((x) => x.variantSku === item.supplierVariantSku)) ||
+    variants[0];
+  if (!v?.vid) throw new Error(`CJ: la variante del SPU ${spu} no trae vid.`);
+
+  const resolved = {
+    vid: v.vid,
+    cost: Number(v.variantSellPrice) || item.supplierCost,
+    weight: Number(v.variantWeight) ? Number(v.variantWeight) / 1000 : item.weightKg,
+    variantName: v.variantNameEn || v.variantName,
+  };
+  _variantCache.set(cacheKey, resolved);
+  return resolved;
 }
 
 export async function createPurchaseOrder(order) {
@@ -68,6 +110,13 @@ export async function createPurchaseOrder(order) {
   // ---------- MODO LIVE (CJ Dropshipping) ----------
   const token = await getAccessToken();
 
+  // Resuelve el VID real de cada producto (a partir de su SPU) antes de ordenar.
+  const cjProducts = [];
+  for (const it of order.items) {
+    const variant = await resolveVariant(it);
+    cjProducts.push({ vid: variant.vid, quantity: it.quantity });
+  }
+
   const payload = {
     orderNumber: order.externalReference,
     shippingCountryCode: order.shipping.country || "MX",
@@ -79,7 +128,7 @@ export async function createPurchaseOrder(order) {
     shippingPhone: order.customer.phone,
     fromCountryCode: config.supplier.fromCountryCode,
     // logisticName: "CJPacket Ordinary", // opcional: fija un método logístico
-    products: lineItems.map((li) => ({ vid: li.sku, quantity: li.quantity })),
+    products: cjProducts,
   };
 
   const res = await fetch(`${config.supplier.apiBase}/shopping/order/createOrderV2`, {
